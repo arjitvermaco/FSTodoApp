@@ -1,9 +1,9 @@
-export default function Todo({todo}) {
+export default function Todo({todoObject,deleteTodo}) {
   return (
     <div className="max-w-5xl mx-auto flex justify-between px-8 py-4 bg-blue-100 shadow-md mt-6 rounded-md">
       <div>
-        <h2 className="text-2xl font-bold">{todo.title}</h2>
-        <p>description klasdjf</p>
+        <h2 className="text-2xl font-bold">{todoObject.title}</h2>
+        <p>{todoObject.description}</p>
         <div className="flex space-x-6">
           <button>
             <svg
@@ -21,7 +21,9 @@ export default function Todo({todo}) {
               />
             </svg>
           </button>
-          <button>
+          <button onClick={()=>{
+            deleteTodo(todoObject)
+          }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               class="h-6 w-6 text-red-500"
@@ -41,7 +43,7 @@ export default function Todo({todo}) {
       </div>
 
       <div>
-        <h3 className="bg-blue-300 p-2 rounded ">Category</h3>
+        <h3 className="bg-blue-300 p-2 rounded ">{todoObject.category}</h3>
         <h4 className="flex">
             Done:
           <svg
@@ -59,7 +61,7 @@ export default function Todo({todo}) {
             />
           </svg>
         </h4>
-        <h4>DateTime</h4>
+        <h4>DateTime : {todoObject.date}</h4>
       </div>
     </div>
   );

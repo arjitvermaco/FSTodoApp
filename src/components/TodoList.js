@@ -1,13 +1,13 @@
 import Todo from "./Todo";
 
-export default function TodoList({todos}) {
-    console.log("Todos Array:" , todos)
+export default function TodoList({todosArray,deleteTodo}) {
+    // console.log("Todos Array:" , todosArray)
   return (
 
     <div>
-        {todos.map((todo)=>{
+        {todosArray.map((todoObject)=>{
             return(
-                <Todo todo={todo}/>
+                <Todo todoObject={todoObject}  deleteTodo={deleteTodo}/>
             )
         })}
     </div>
