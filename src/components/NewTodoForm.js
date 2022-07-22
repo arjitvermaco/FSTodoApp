@@ -1,8 +1,42 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
+import toast from 'react-hot-toast';
 
-export default function NewTodoForm({isOpen,setIsOpen}) {
- 
+
+export default function NewTodoForm({ isOpen, setIsOpen,addTodo,todosArray }) {
+  let [newTodo, setNewTodo] = useState({
+    id: "",
+    title: "",
+    description: "",
+    category: "",
+    done: false,
+    date: new Date(),
+  });
+
+
+  const options = ["Work", "Home", "School", "Other"];
+
+  useEffect(() => {
+    console.log("Title Value:", newTodo);
+  }, [newTodo]);
+
+  // console.log(newTodo);
+
+
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    if(newTodo.title === "" || newTodo.description === ""){
+      toast.error("All Fields are required");
+    }else{
+      // addTodo(newTodo);
+
+      console.log(todosArray.length);
+      console.log(todosArray[todosArray.length-1].id)
+
+      setNewTodo({...newTodo,id:todosArray[todosArray.length-1].id + 1})
+
+    }
+  }
 
   return (
     <Dialog
@@ -18,19 +52,42 @@ export default function NewTodoForm({isOpen,setIsOpen}) {
         {/* The actual dialog panel  */}
         <Dialog.Panel className="mx-auto max-w-sm rounded bg-white p-12">
           <Dialog.Title>Create New Todo</Dialog.Title>
-        <div>
+          <div>
             <form className="flex flex-col">
-                <input type="text" className="border border-2 mt-4 rounded" placeholder="Add New Todo Title"/>
-                <input type="textarea" className="border border-2 mt-4 rounded" placeholder="Add New Todo Description"/>
-                <select className="mt-4 border border-2 rounded">
-                    <option>Work</option>
-                    <option>Personal</option>
-                    <option>Other</option>
-                </select>
-                <button className="bg-blue-300 px-4 py-2 mt-4 rounded shadow">Add New Todo</button>
+              <input
+                type="text"
+                className="border border-2 mt-4 rounded"
+                placeholder="Add New Todo Title"
+                value={newTodo.title}
+                onChange={(e) => {
+                  setNewTodo({ ...newTodo, title: e.target.value });
+                }}
+              />
+              <textarea
+                className="border border-2 mt-4 rounded"
+                placeholder="Add New Todo Description"
+                rows="4"
+                value={newTodo.description}
+                onChange={(e) => {
+                  setNewTodo({ ...newTodo, description: e.target.value });
+                }}
+              ></textarea>
+              <select className="mt-4 border border-2 rounded" onChange={(e)=>{
+                setNewTodo({...newTodo, category: e.target.value})
+              }}>
+                {options.map((option) => {
+                  return (
+                    <option key={option} value={option}>
+                      {option}
+                    </option>
+                  );
+                })}
+              </select>
+              <button type="submit" onClick={(e)=>{handleSubmit(e)}} className="bg-blue-300 px-4 py-2 mt-4 rounded shadow">
+                Add New Todo
+              </button>
             </form>
-        </div>
-    
+          </div>
         </Dialog.Panel>
       </div>
     </Dialog>

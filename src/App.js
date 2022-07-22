@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import NewTodoForm from "./components/NewTodoForm";
 import TodoList from "./components/TodoList";
+import  { Toaster } from "react-hot-toast";
 
 export default function App() {
   let [todosArray, setTodosArray] = useState([]);
@@ -40,11 +41,31 @@ export default function App() {
     }
   }
 
+  function addTodo(newTodo) {
+    console.log("Add Todo Button Clicked");
+    console.log("New Todo is :", newTodo);
+
+
+
+
+
+    //add new todo to todoArray
+    // setTodosArray([...todosArray, newTodo]);
+
+    // console.log([...todosArray,newTodo])
+    console.log(todosArray.length)
+    console.log(todosArray[todosArray.length-1])
+
+    // localStorage.setItem("todosArray", JSON.stringify([...todosArray, newTodo]));
+  }
+
   return (
     <div>
+      <Toaster />
+
       <Header isOpen={isOpen} setIsOpen={setIsOpen} />
       <TodoList todosArray={todosArray} deleteTodo={deleteTodo} />
-      <NewTodoForm isOpen={isOpen} setIsOpen={setIsOpen} />
+      <NewTodoForm todosArray={todosArray} addTodo={addTodo} isOpen={isOpen} setIsOpen={setIsOpen} />
     </div>
   );
 }
